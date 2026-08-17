@@ -3,9 +3,9 @@
  * Includes defensive error parsing and 429 Rate Limit handling.
  */
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL !== undefined
+const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL && import.meta.env.VITE_API_BASE_URL.trim() !== '')
   ? import.meta.env.VITE_API_BASE_URL
-  : (import.meta.env.DEV ? 'http://127.0.0.1:8000' : '');
+  : (import.meta.env.DEV ? 'http://127.0.0.1:8000' : 'https://vulnscan-backend-1bpp.onrender.com');
 
 export class ApiError extends Error {
   constructor(message, status = null, code = null, retryAfter = null) {
