@@ -35,7 +35,7 @@ export default function AboutPage() {
         <div className="developer-social-panel" aria-label="Developer Profiles">
           {/* LinkedIn Button Item */}
           <a
-            href="https://www.linkedin.com/in/your-username"
+            href="https://www.linkedin.com/in/advaith-k-21jul2006"
             target="_blank"
             rel="noopener noreferrer"
             className="social-button-item"
@@ -60,7 +60,7 @@ export default function AboutPage() {
 
           {/* GitHub Button Item */}
           <a
-            href="https://github.com/your-username"
+            href="https://github.com/advaith-k-0911/vulnscan-lite"
             target="_blank"
             rel="noopener noreferrer"
             className="social-button-item"

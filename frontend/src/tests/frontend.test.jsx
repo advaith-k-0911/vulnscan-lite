@@ -126,19 +126,19 @@ describe('AboutPage Component', () => {
     const linkedinLink = screen.getByRole('link', { name: /LinkedIn/i });
     const githubLink = screen.getByRole('link', { name: /GitHub/i });
 
-    expect(linkedinLink.getAttribute('href')).toBe('https://www.linkedin.com/in/your-username');
+    expect(linkedinLink.getAttribute('href')).toBe('https://www.linkedin.com/in/advaith-k-21jul2006');
     expect(linkedinLink.getAttribute('rel')).toBe('noopener noreferrer');
     expect(linkedinLink.getAttribute('target')).toBe('_blank');
     expect(screen.getByText('LinkedIn')).toBeDefined();
 
-    expect(githubLink.getAttribute('href')).toBe('https://github.com/your-username');
+    expect(githubLink.getAttribute('href')).toBe('https://github.com/advaith-k-0911/vulnscan-lite');
     expect(githubLink.getAttribute('rel')).toBe('noopener noreferrer');
     expect(githubLink.getAttribute('target')).toBe('_blank');
     expect(screen.getByText('GitHub')).toBeDefined();
 
     // Verify raw url text strings are not displayed
-    expect(screen.queryByText('https://www.linkedin.com/in/your-username')).toBeNull();
-    expect(screen.queryByText('https://github.com/your-username')).toBeNull();
+    expect(screen.queryByText('https://www.linkedin.com/in/advaith-k-21jul2006')).toBeNull();
+    expect(screen.queryByText('https://github.com/advaith-k-0911/vulnscan-lite')).toBeNull();
   });
 });
 

@@ -189,7 +189,7 @@ For step-by-step instructions, environment variables configuration, and VPS Dock
 Developed by: **Advaith K**
 - **Education**: B.Tech in Computer Science & Engineering (Specialization in Cyber Security)
 - **Role**: Project Architect & Security Engineer
-- **Profiles**: [LinkedIn](https://www.linkedin.com/in/your-username) • [GitHub](https://github.com/your-username)
+- **Profiles**: [LinkedIn](https://www.linkedin.com/in/advaith-k-21jul2006) • [GitHub](https://github.com/advaith-k-0911/vulnscan-lite)
 
 ---
 
