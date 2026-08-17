@@ -60,8 +60,9 @@ services:
   # ----------------------------------------------------------------------------
   # B. React 18 Single Page Application (Static Site - Free Tier)
   # ----------------------------------------------------------------------------
-  - type: static
+  - type: web
     name: vulnscan-frontend
+    runtime: static
     buildCommand: cd frontend && npm install && npm run build
     staticPublishPath: ./frontend/dist
     routes:
