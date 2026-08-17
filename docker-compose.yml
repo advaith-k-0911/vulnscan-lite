@@ -1,0 +1,103 @@
+version: '3.8'
+
+services:
+  # 1. Redis Message Broker & Rate Limit Counter Store
+  redis:
+    image: redis:7-alpine
+    container_name: vulnscan_redis
+    restart: unless-stopped
+    command: redis-server --save "" --appendonly no
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    networks:
+      - vulnscan_net
+
+  # 2. FastAPI REST API Backend
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: vulnscan_backend
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - APP_NAME=VulnScan Lite
+      - APP_ENV=development
+      - DEBUG=False
+      - HOST=0.0.0.0
+      - PORT=8000
+      - DATABASE_URL=sqlite:////app/data/vulnscan.db
+      - REDIS_URL=redis://redis:6379/0
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+      - RATE_LIMIT_ENABLED=True
+      - RATE_LIMIT_SCAN_CREATION_LIMIT=10
+      - RATE_LIMIT_SCAN_CREATION_WINDOW=60
+      - MAX_REQUEST_BODY_BYTES=65536
+      - ENABLE_HSTS=False
+      - CORS_ORIGINS=http://localhost:5173,http://127.0.0.1:5173,http://localhost:3000,http://127.0.0.1:3000
+    volumes:
+      - sqlite_data:/app/data
+    depends_on:
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "python -c \"import urllib.request; urllib.request.urlopen('http://localhost:8000/health')\""]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+    networks:
+      - vulnscan_net
+
+  # 3. Asynchronous Celery Scanner Worker
+  celery_worker:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: vulnscan_celery_worker
+    restart: unless-stopped
+    command: celery -A backend.celery_app.celery_app worker --loglevel=info
+    environment:
+      - APP_ENV=development
+      - DATABASE_URL=sqlite:////app/data/vulnscan.db
+      - REDIS_URL=redis://redis:6379/0
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+    volumes:
+      - sqlite_data:/app/data
+    depends_on:
+      redis:
+        condition: service_healthy
+      backend:
+        condition: service_healthy
+    networks:
+      - vulnscan_net
+
+  # 4. React Frontend (Vite SPA served with Nginx + API Reverse Proxy)
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: vulnscan_frontend
+    restart: unless-stopped
+    ports:
+      - "5173:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+    networks:
+      - vulnscan_net
+
+volumes:
+  sqlite_data:
+    name: vulnscan_sqlite_data
+
+networks:
+  vulnscan_net:
+    name: vulnscan_network
+    driver: bridge

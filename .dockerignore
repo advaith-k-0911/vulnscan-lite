@@ -1,0 +1,38 @@
+# Git
+.git
+.github
+.gitignore
+
+# Environment & Secrets
+.env
+*.env
+*.pem
+*.key
+*.cert
+
+# Python cache & artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Node & Frontend build
+frontend/node_modules/
+frontend/dist/
+node_modules/
+dist/
+
+# Local databases & logs
+*.db
+*.sqlite
+*.sqlite3
+vulnscan.db
+*.log
+
+# IDE & OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
