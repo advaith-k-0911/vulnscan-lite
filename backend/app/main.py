@@ -45,10 +45,11 @@ app.add_middleware(SecurityHeadersMiddleware)
 # 2. Request Body Size Limit Middleware (64KB payload bounds)
 app.add_middleware(RequestSizeLimitMiddleware)
 
-# 3. CORS Configuration (Explicit origins, credentials-safe)
+# 3. CORS Configuration (Explicit origins + Render subdomains, credentials-safe)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.CORS_ORIGINS,
+    allow_origin_regex=r"https://.*\.onrender\.com",
     allow_credentials=True,
     allow_methods=["GET", "POST", "OPTIONS"],
     allow_headers=["*"],
