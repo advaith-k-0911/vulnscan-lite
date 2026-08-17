@@ -1,11 +1,10 @@
 # ==============================================================================
-# VulnScan Lite - Render Blueprint Specification
-# Infrastructure as Code (IaC) for deploying VulnScan Lite on Render
+# VulnScan Lite - Render Blueprint Specification (Free-Tier Compatible)
 # ==============================================================================
 
 version: "1"
 
-# 1. Managed PostgreSQL Database
+# 1. Managed PostgreSQL Database (Free Tier)
 databases:
   - name: vulnscan-db
     databaseName: vulnscan
@@ -16,17 +15,7 @@ databases:
 # 2. Application Services
 services:
   # ----------------------------------------------------------------------------
-  # A. Redis Message Broker & Rate Limiting Store (Private Service)
-  # ----------------------------------------------------------------------------
-  - type: redis
-    name: vulnscan-redis
-    region: oregon
-    plan: free
-    ipAllowList: [] # Private to internal services; not exposed to public internet
-    maxmemoryPolicy: noeviction
-
-  # ----------------------------------------------------------------------------
-  # B. FastAPI REST API Web Service
+  # A. FastAPI REST API Web Service (Free Tier)
   # ----------------------------------------------------------------------------
   - type: web
     name: vulnscan-backend
@@ -50,20 +39,11 @@ services:
           name: vulnscan-db
           property: connectionString
       - key: REDIS_URL
-        fromService:
-          type: redis
-          name: vulnscan-redis
-          property: connectionString
+        value: "redis://localhost:6379/0"
       - key: CELERY_BROKER_URL
-        fromService:
-          type: redis
-          name: vulnscan-redis
-          property: connectionString
+        value: "redis://localhost:6379/0"
       - key: CELERY_RESULT_BACKEND
-        fromService:
-          type: redis
-          name: vulnscan-redis
-          property: connectionString
+        value: "redis://localhost:6379/0"
       - key: RATE_LIMIT_ENABLED
         value: "True"
       - key: RATE_LIMIT_SCAN_CREATION_LIMIT
@@ -75,45 +55,10 @@ services:
       - key: ENABLE_HSTS
         value: "True"
       - key: CORS_ORIGINS
-        sync: false # Set to your deployed frontend URL (e.g., https://vulnscan-frontend.onrender.com)
+        sync: false
 
   # ----------------------------------------------------------------------------
-  # C. Celery Background Worker (Passive Scanner Orchestration)
-  # ----------------------------------------------------------------------------
-  - type: worker
-    name: vulnscan-worker
-    runtime: python
-    region: oregon
-    plan: free
-    buildCommand: pip install -r backend/requirements.txt
-    startCommand: celery -A backend.celery_app.celery_app worker --loglevel=info
-    envVars:
-      - key: APP_NAME
-        value: VulnScan Lite
-      - key: APP_ENV
-        value: production
-      - key: DATABASE_URL
-        fromDatabase:
-          name: vulnscan-db
-          property: connectionString
-      - key: REDIS_URL
-        fromService:
-          type: redis
-          name: vulnscan-redis
-          property: connectionString
-      - key: CELERY_BROKER_URL
-        fromService:
-          type: redis
-          name: vulnscan-redis
-          property: connectionString
-      - key: CELERY_RESULT_BACKEND
-        fromService:
-          type: redis
-          name: vulnscan-redis
-          property: connectionString
-
-  # ----------------------------------------------------------------------------
-  # D. React 18 Single Page Application (Static Site)
+  # B. React 18 Single Page Application (Static Site - Free Tier)
   # ----------------------------------------------------------------------------
   - type: static
     name: vulnscan-frontend
@@ -125,4 +70,4 @@ services:
         destination: /index.html
     envVars:
       - key: VITE_API_BASE_URL
-        sync: false # Set to your deployed backend URL (e.g., https://vulnscan-backend.onrender.com)
+        sync: false
