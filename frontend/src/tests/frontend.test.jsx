@@ -2,6 +2,8 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { BrowserRouter, MemoryRouter, Routes, Route } from 'react-router-dom';
+import { readFile } from 'node:fs/promises';
+import { resolve } from 'node:path';
 import * as api from '../services/api';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -491,6 +493,11 @@ describe('HistoryPage Component', () => {
 describe('API Service Unit Tests', () => {
   beforeEach(() => {
     vi.restoreAllMocks();
+  });
+
+  it('does not hardcode a hosted production backend fallback', async () => {
+    const source = await readFile(resolve(process.cwd(), 'src/services/api.js'), 'utf8');
+    expect(source).not.toContain('vulnscan-backend-1bpp.onrender.com');
   });
 
   it('createScan issues POST request and handles 202 response', async () => {
