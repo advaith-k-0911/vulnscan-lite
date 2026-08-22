@@ -119,24 +119,26 @@ export default function ScannerPage() {
                 Target Website URL
               </label>
               <div className="input-wrapper">
-                <span className="url-prefix-icon" aria-hidden="true">🌐</span>
-                <input
-                  id="target-url-input"
-                  type="text"
-                  className={`url-input ${inputError ? 'input-invalid' : ''}`}
-                  placeholder="https://example.com"
-                  value={urlInput}
-                  onChange={(e) => {
-                    setUrlInput(e.target.value);
-                    if (inputError) setInputError('');
-                  }}
-                  disabled={isSubmitting}
-                  aria-required="true"
-                  aria-invalid={!!inputError}
-                  aria-describedby={inputError ? 'url-error-msg' : undefined}
-                  autoComplete="off"
-                  spellCheck="false"
-                />
+                <div className="url-input-inner">
+                  <span className="url-prefix-icon" aria-hidden="true">🌐</span>
+                  <input
+                    id="target-url-input"
+                    type="text"
+                    className={`url-input ${inputError ? 'input-invalid' : ''}`}
+                    placeholder="https://example.com"
+                    value={urlInput}
+                    onChange={(e) => {
+                      setUrlInput(e.target.value);
+                      if (inputError) setInputError('');
+                    }}
+                    disabled={isSubmitting}
+                    aria-required="true"
+                    aria-invalid={!!inputError}
+                    aria-describedby={inputError ? 'url-error-msg' : undefined}
+                    autoComplete="off"
+                    spellCheck="false"
+                  />
+                </div>
                 <button
                   type="submit"
                   className="scan-submit-btn"

@@ -13,13 +13,12 @@ from scanner.engine import scan as execute_scan
 logger = logging.getLogger("vulnscan.tasks")
 
 
-@celery_app.task(name="backend.tasks.run_scan", bind=True, max_retries=1)
-def run_scan(self, scan_id: str) -> Dict[str, Any]:
+def execute_scan_job(scan_id: str) -> Dict[str, Any]:
     """
-    Asynchronous Celery task orchestrating passive website security assessment.
-    Interacts with the persistent SQLAlchemy database for all state transitions.
+    Core synchronous scan executor interacting with SQLAlchemy database.
+    Usable directly by Celery workers or FastAPI BackgroundTasks.
     """
-    logger.info("Celery task started for scan_id: %s", scan_id)
+    logger.info("Executing scan job for scan_id: %s", scan_id)
     db = SessionLocal()
     try:
         # 1. Retrieve the existing Scan record
@@ -62,3 +61,9 @@ def run_scan(self, scan_id: str) -> Dict[str, Any]:
 
     finally:
         db.close()
+
+
+@celery_app.task(name="backend.tasks.run_scan", bind=True, max_retries=1)
+def run_scan(self, scan_id: str) -> Dict[str, Any]:
+    """Celery task wrapper around execute_scan_job."""
+    return execute_scan_job(scan_id)

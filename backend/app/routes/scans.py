@@ -5,7 +5,7 @@ All scan states, records, and reports are persisted in the SQLAlchemy database.
 
 import logging
 import re
-from fastapi import APIRouter, Depends, HTTPException, Query, Response, status
+from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, Query, Response, status
 from sqlalchemy.orm import Session
 
 from backend.app.database import get_db
@@ -19,7 +19,7 @@ from backend.app.schemas.scan import (
 )
 from backend.app.security.rate_limiter import scan_creation_limiter
 from backend.app.services.scan_service import ScanService
-from backend.tasks import run_scan
+from backend.tasks import run_scan, execute_scan_job
 from reports.pdf_generator import generate_pdf_report
 from scanner.http import validate_and_normalize_url
 
@@ -43,6 +43,7 @@ router = APIRouter()
 )
 def create_scan(
     payload: ScanCreateRequest,
+    background_tasks: BackgroundTasks,
     db: Session = Depends(get_db),
     _rate_limit: None = Depends(scan_creation_limiter),
 ):
@@ -62,20 +63,26 @@ def create_scan(
     # 2. Create persistent Scan record in QUEUED state in database
     scan_record = ScanService.create_scan(db=db, target_url=normalized_url)
 
-    # 3. Dispatch task to Celery worker queue
+    # 3. Dispatch task to Celery worker queue with seamless BackgroundTasks fallback
     try:
         run_scan.delay(scan_record.id)
     except Exception as e:
-        logger.error("Failed to enqueue Celery task for scan %s: %s", scan_record.id, e)
-        ScanService.fail_scan(
-            db=db,
-            scan_id=scan_record.id,
-            error={"code": "QUEUE_ERROR", "message": "Failed to enqueue background scan task."},
+        logger.warning(
+            "Celery broker unavailable (%s). Falling back to asynchronous background task runner.", e
         )
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="Failed to submit scan to the task queue.",
-        )
+        try:
+            background_tasks.add_task(execute_scan_job, scan_record.id)
+        except Exception as bg_err:
+            logger.error("Failed to enqueue background task for scan %s: %s", scan_record.id, bg_err)
+            ScanService.fail_scan(
+                db=db,
+                scan_id=scan_record.id,
+                error={"code": "QUEUE_ERROR", "message": "Failed to enqueue background scan task."},
+            )
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail="Failed to submit scan to the task queue.",
+            )
 
     return ScanQueueResponse(
         scan_id=scan_record.id,

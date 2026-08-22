@@ -60,8 +60,18 @@ def test_async_post_scans_returns_202_accepted():
             db.close()
 
 
-def test_async_post_scans_celery_dispatch_failure():
-    with patch("backend.app.routes.scans.run_scan.delay", side_effect=RuntimeError("Redis broker unreachable")):
+def test_async_post_scans_celery_fallback_when_broker_unavailable():
+    with patch("backend.app.routes.scans.run_scan.delay", side_effect=RuntimeError("Redis broker unreachable")), \
+         patch("backend.app.routes.scans.execute_scan_job") as mock_exec:
+        response = client.post("/api/scans", json={"target_url": "https://example.com"})
+        assert response.status_code == 202
+        data = response.json()
+        assert data["status"] == "QUEUED"
+
+
+def test_async_post_scans_queue_complete_failure():
+    with patch("backend.app.routes.scans.run_scan.delay", side_effect=RuntimeError("Redis broker unreachable")), \
+         patch("fastapi.BackgroundTasks.add_task", side_effect=RuntimeError("Worker pool exhausted")):
         response = client.post("/api/scans", json={"target_url": "https://example.com"})
         assert response.status_code == 500
 

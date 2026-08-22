@@ -33,7 +33,24 @@ describe('Navbar Component', () => {
     expect(historyLink.getAttribute('href')).toBe('/history');
     expect(aboutAppLink.getAttribute('href')).toBe('/about-app');
     expect(aboutDevLink.getAttribute('href')).toBe('/about');
-    expect(screen.getByText('Dev: Advaith K')).toBeDefined();
+    expect(screen.getAllByText('Dev: Advaith K').length).toBeGreaterThan(0);
+  });
+
+  it('toggles mobile menu open and close states with button interaction', () => {
+    render(
+      <BrowserRouter>
+        <Navbar />
+      </BrowserRouter>
+    );
+
+    const toggleBtn = screen.getByRole('button', { name: /Open navigation menu/i });
+    expect(toggleBtn.getAttribute('aria-expanded')).toBe('false');
+
+    fireEvent.click(toggleBtn);
+    expect(toggleBtn.getAttribute('aria-expanded')).toBe('true');
+
+    fireEvent.click(toggleBtn);
+    expect(toggleBtn.getAttribute('aria-expanded')).toBe('false');
   });
 });
 
