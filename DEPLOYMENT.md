@@ -8,7 +8,7 @@
 
 ## 1. Production Architecture on Render
 
-VulnScan Lite is structured to deploy seamlessly using the included **Render Blueprint** (`render.yaml`):
+VulnScan Lite is structured to deploy using the included **Render Blueprint** (`render.yaml`):
 
 ```text
                                 INTERNET
@@ -23,14 +23,16 @@ VulnScan Lite is structured to deploy seamlessly using the included **Render Blu
                     │                             │
                     └──────────────┬──────────────┘
                                    │ (Render Private Network)
-             ┌─────────────────────┼─────────────────────┐
-             ▼                     ▼                     ▼
-   [ Managed PostgreSQL ]   [ Managed Redis ]    [ Celery Worker ]
-       (vulnscan-db)        (vulnscan-redis)     (vulnscan-worker)
-                                                         │
-                                                         ▼
-                                                [ Target Website ]
-                                                (Public Internet)
+                                   │
+                    [ Managed PostgreSQL ]
+                         (vulnscan-db)
+                                   │
+                                   ▼
+                       [ FastAPI Background Task ]
+                                   │
+                                   ▼
+                          [ Target Website ]
+                          (Public Internet)
 ```
 
 ---
@@ -55,11 +57,9 @@ VulnScan Lite is structured to deploy seamlessly using the included **Render Blu
 1. Log in to your [Render Dashboard](https://dashboard.render.com/).
 2. Click **New +** in the top navigation and select **Blueprint**.
 3. Connect your GitHub account and select your `vulnscan-lite` repository.
-4. Render will automatically discover `render.yaml` and display the 5 resources:
+4. Render will automatically discover `render.yaml` and display the 3 resources:
    - `vulnscan-db` (PostgreSQL Database)
-   - `vulnscan-redis` (Redis Key-Value Service)
    - `vulnscan-backend` (FastAPI Web Service)
-   - `vulnscan-worker` (Celery Background Worker)
    - `vulnscan-frontend` (Static Site)
 5. Click **Apply** to trigger automated infrastructure provisioning.
 
@@ -86,7 +86,7 @@ Once the services are created:
    - Open `https://vulnscan-frontend.onrender.com`.
 3. **Execute Live Verification Scan**:
    - Enter `https://example.com` into the URL input and click **Start Scan**.
-   - Verify that the scan enters `QUEUED`, transitions to `RUNNING` as `vulnscan-worker` picks it up, and completes with a full findings report and 0–100 score.
+   - Verify that the scan enters `QUEUED`, transitions to `RUNNING` in the FastAPI background runner, and completes with a full findings report and 0–100 score.
    - Verify that clicking **Download PDF** generates the executive report.
    - Verify that the scan appears in **Scan History**.
 
@@ -130,13 +130,12 @@ docker compose ps
 
 ### Viewing Logs in Render:
 - **Backend API Logs**: Go to `vulnscan-backend` -> **Logs** (monitor incoming requests and health probes).
-- **Worker Logs**: Go to `vulnscan-worker` -> **Logs** (monitor active scan jobs and completed tasks).
 
 ### Troubleshooting Matrix:
 | Symptom | Root Cause | Resolution |
 | :--- | :--- | :--- |
 | **Frontend shows Network Error** | `VITE_API_BASE_URL` missing or CORS error | Ensure `VITE_API_BASE_URL` in `vulnscan-frontend` points to backend URL, and `CORS_ORIGINS` in `vulnscan-backend` contains the frontend URL. |
-| **Scan stays in QUEUED indefinitely** | Celery worker not connected to Redis | Check `vulnscan-worker` logs. Verify `REDIS_URL` / `CELERY_BROKER_URL` matches `vulnscan-redis` connection string. |
+| **Scan stays in QUEUED indefinitely** | Backend restarted before its background task started | Check `vulnscan-backend` logs, then submit a new scan after the service is healthy. |
 | **Database connection error** | PostgreSQL service sleeping or building | Verify `vulnscan-db` is marked available and `DATABASE_URL` is populated. |
 
 ---

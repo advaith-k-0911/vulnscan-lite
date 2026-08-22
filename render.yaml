@@ -38,12 +38,10 @@ services:
         fromDatabase:
           name: vulnscan-db
           property: connectionString
-      - key: REDIS_URL
-        value: "redis://localhost:6379/0"
-      - key: CELERY_BROKER_URL
-        value: "redis://localhost:6379/0"
-      - key: CELERY_RESULT_BACKEND
-        value: "redis://localhost:6379/0"
+      # Render free services do not include a Celery worker. Run scans after
+      # returning HTTP 202 in FastAPI's background task runner instead.
+      - key: SCAN_EXECUTION_MODE
+        value: background
       - key: RATE_LIMIT_ENABLED
         value: "True"
       - key: RATE_LIMIT_SCAN_CREATION_LIMIT

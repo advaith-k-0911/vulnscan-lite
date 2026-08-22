@@ -2,7 +2,7 @@
 VulnScan Lite - Configuration Settings Management
 Uses Pydantic Settings for environment-driven, production-safe configuration.
 """
-from typing import List, Union
+from typing import List, Literal, Union
 from pydantic import field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -23,6 +23,7 @@ class Settings(BaseSettings):
     REDIS_URL: str = "redis://localhost:6379/0"
     CELERY_BROKER_URL: str = "redis://localhost:6379/0"
     CELERY_RESULT_BACKEND: str = "redis://localhost:6379/0"
+    SCAN_EXECUTION_MODE: Literal["celery", "background"] = "background"
 
     # Scanner Operational & Safety Bounds
     SCANNER_TIMEOUT_SECONDS: int = 10

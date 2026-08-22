@@ -9,6 +9,7 @@ from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, Query, R
 from sqlalchemy.orm import Session
 
 from backend.app.database import get_db
+from backend.app.config import settings
 from backend.app.schemas.scan import (
     ScanCreateRequest,
     ScanDetailResponse,
@@ -63,10 +64,26 @@ def create_scan(
     # 2. Create persistent Scan record in QUEUED state in database
     scan_record = ScanService.create_scan(db=db, target_url=normalized_url)
 
-    # 3. Dispatch task to Celery worker queue with seamless BackgroundTasks fallback
+    # 3. Dispatch to the configured asynchronous executor. Render's free web
+    # service uses FastAPI BackgroundTasks; Docker deployments use Celery.
     try:
-        run_scan.delay(scan_record.id)
+        if settings.SCAN_EXECUTION_MODE == "background":
+            background_tasks.add_task(execute_scan_job, scan_record.id)
+        else:
+            run_scan.delay(scan_record.id)
     except Exception as e:
+        if settings.SCAN_EXECUTION_MODE == "background":
+            logger.error("Failed to enqueue background task for scan %s: %s", scan_record.id, e)
+            ScanService.fail_scan(
+                db=db,
+                scan_id=scan_record.id,
+                error={"code": "QUEUE_ERROR", "message": "Failed to enqueue background scan task."},
+            )
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail="Failed to submit scan to the task queue.",
+            )
+
         logger.warning(
             "Celery broker unavailable (%s). Falling back to asynchronous background task runner.", e
         )

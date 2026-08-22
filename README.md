@@ -178,7 +178,7 @@ npm run build
 
 ## 10. Production Deployment
 
-VulnScan Lite includes a complete **Render Blueprint** (`render.yaml`) for one-click cloud deployment with managed PostgreSQL, Redis, FastAPI web service, Celery background worker, and React static site.
+VulnScan Lite includes a **Render Blueprint** (`render.yaml`) for a free-tier deployment with managed PostgreSQL, a FastAPI web service, and a React static site. Scans run through FastAPI background tasks in this setup. Docker Compose deployments use Redis and a Celery worker for queued scan processing.
 
 For step-by-step instructions, environment variables configuration, and VPS Docker Compose guides, refer to [`DEPLOYMENT.md`](./DEPLOYMENT.md) and [`render.yaml`](./render.yaml).
 
