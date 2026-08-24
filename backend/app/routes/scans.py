@@ -116,6 +116,7 @@ def create_scan(
 )
 def get_scan_status(
     scan_id: str,
+    response: Response,
     db: Session = Depends(get_db),
 ):
     """
@@ -127,6 +128,7 @@ def get_scan_status(
             status_code=status.HTTP_404_NOT_FOUND,
             detail=f"Scan with ID '{scan_id}' was not found.",
         )
+    response.headers["Cache-Control"] = "no-store, max-age=0"
     return ScanStatusResponse(
         scan_id=scan_record.id,
         status=scan_record.status,
@@ -141,6 +143,7 @@ def get_scan_status(
 )
 def get_scan(
     scan_id: str,
+    response: Response,
     db: Session = Depends(get_db),
 ):
     """
@@ -152,6 +155,7 @@ def get_scan(
             status_code=status.HTTP_404_NOT_FOUND,
             detail=f"Scan with ID '{scan_id}' was not found.",
         )
+    response.headers["Cache-Control"] = "no-store, max-age=0"
 
     # Only return full result report when completed
     result_data = scan_record.result_json if scan_record.status == "COMPLETED" else None
@@ -250,6 +254,7 @@ def download_scan_pdf(
     description="Returns a paginated list of recent security scan summaries from the database.",
 )
 def list_scans(
+    response: Response,
     limit: int = Query(50, ge=1, le=100, description="Maximum number of records to return"),
     offset: int = Query(0, ge=0, description="Number of records to skip"),
     db: Session = Depends(get_db),
@@ -258,6 +263,7 @@ def list_scans(
     List historical scan records from the database.
     """
     items, total = ScanService.list_scans(db=db, limit=limit, offset=offset)
+    response.headers["Cache-Control"] = "no-store, max-age=0"
     return ScanListResponse(
         total=total,
         items=[

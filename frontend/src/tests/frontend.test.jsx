@@ -578,6 +578,10 @@ describe('API Service Unit Tests', () => {
 
     const result = await api.getScanStatus('scan-123');
     expect(result.status).toBe('RUNNING');
+    expect(global.fetch).toHaveBeenCalledWith(
+      expect.stringContaining('/api/scans/scan-123/status'),
+      { cache: 'no-store' }
+    );
   });
 
   it('checkHealth issues GET request to /health', async () => {

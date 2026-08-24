@@ -196,6 +196,7 @@ def test_get_scan_status_endpoint(status_value):
     data = response.json()
     assert data["scan_id"] == scan_id
     assert data["status"] == status_value
+    assert response.headers["cache-control"] == "no-store, max-age=0"
 
 
 def test_get_scan_status_not_found():
@@ -220,6 +221,7 @@ def test_get_scan_detail_running_state():
     assert data["id"] == scan_id
     assert data["status"] == "RUNNING"
     assert data["result"] is None  # Unfinished scans return result = None
+    assert response.headers["cache-control"] == "no-store, max-age=0"
 
 
 def test_get_scan_detail_completed_state():
@@ -240,6 +242,7 @@ def test_get_scan_detail_completed_state():
     assert data["status"] == "COMPLETED"
     assert data["score"] == 85
     assert data["result"]["score"] == 85
+    assert response.headers["cache-control"] == "no-store, max-age=0"
 
 
 def test_get_scan_detail_not_found():
@@ -263,3 +266,4 @@ def test_list_scans_endpoint():
     data = response.json()
     assert data["total"] == 3
     assert len(data["items"]) == 2
+    assert response.headers["cache-control"] == "no-store, max-age=0"

@@ -99,7 +99,10 @@ export async function createScan(targetUrl) {
  */
 export async function getScanStatus(scanId) {
   try {
-    const response = await fetch(`${API_BASE_URL}/api/scans/${encodeURIComponent(scanId)}/status`);
+    const response = await fetch(
+      `${API_BASE_URL}/api/scans/${encodeURIComponent(scanId)}/status`,
+      { cache: 'no-store' }
+    );
     return await handleResponse(response);
   } catch (error) {
     if (error instanceof ApiError) throw error;
@@ -114,7 +117,10 @@ export async function getScanStatus(scanId) {
  */
 export async function getScan(scanId) {
   try {
-    const response = await fetch(`${API_BASE_URL}/api/scans/${encodeURIComponent(scanId)}`);
+    const response = await fetch(
+      `${API_BASE_URL}/api/scans/${encodeURIComponent(scanId)}`,
+      { cache: 'no-store' }
+    );
     return await handleResponse(response);
   } catch (error) {
     if (error instanceof ApiError) throw error;
@@ -171,7 +177,10 @@ export async function downloadScanPdf(scanId) {
  */
 export async function listScans(limit = 50, offset = 0) {
   try {
-    const response = await fetch(`${API_BASE_URL}/api/scans?limit=${limit}&offset=${offset}`);
+    const response = await fetch(
+      `${API_BASE_URL}/api/scans?limit=${limit}&offset=${offset}`,
+      { cache: 'no-store' }
+    );
     return await handleResponse(response);
   } catch (error) {
     if (error instanceof ApiError) throw error;
