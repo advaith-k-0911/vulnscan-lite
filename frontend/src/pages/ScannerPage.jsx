@@ -16,15 +16,11 @@ export default function ScannerPage() {
   const {
     status,
     isPolling,
+    scanData,
     error: pollingError,
     networkWarning,
     resetPolling,
-  } = useScanPolling(activeScanId, {
-    onComplete: (data) => {
-      // Transition smoothly to the results page once completed
-      navigate(`/results/${data.id}`);
-    },
-  });
+  } = useScanPolling(activeScanId);
 
   const validateUrl = (rawUrl) => {
     const trimmed = rawUrl.trim();
@@ -169,6 +165,7 @@ export default function ScannerPage() {
           targetUrl={activeTarget}
           scanId={activeScanId}
           status={status}
+          scanData={scanData}
           error={pollingError}
           networkWarning={networkWarning}
           onReset={handleReset}

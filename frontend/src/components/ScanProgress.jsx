@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import ScanStatus from './ScanStatus';
 
 /**
@@ -9,6 +10,7 @@ import ScanStatus from './ScanStatus';
  * @param {string} props.targetUrl - Target URL being scanned
  * @param {string} props.scanId - Scan Job UUID
  * @param {'QUEUED'|'RUNNING'|'COMPLETED'|'FAILED'} props.status - Real backend status
+ * @param {Object|null} [props.scanData] - Full completed scan record if available
  * @param {string|null} [props.error] - Safe error message if failed
  * @param {string|null} [props.networkWarning] - Transient network retry notice
  * @param {Function} [props.onReset] - Handler to start another scan
@@ -18,6 +20,7 @@ export default function ScanProgress({
   targetUrl,
   scanId,
   status,
+  scanData,
   error,
   networkWarning,
   onReset,
@@ -34,6 +37,7 @@ export default function ScanProgress({
   const isFailed = status === 'FAILED';
   const isQueued = status === 'QUEUED';
   const isRunning = status === 'RUNNING';
+  const isCompleted = status === 'COMPLETED';
 
   return (
     <section className="scan-progress-container" aria-live="polite" aria-atomic="true">
@@ -76,6 +80,23 @@ export default function ScanProgress({
           </div>
         )}
 
+        {isCompleted && (
+          <div className="state-content">
+            <div className="state-icon-wrapper success">
+              <span className="state-success-icon">✓</span>
+            </div>
+            <div className="state-text-block">
+              <h3 className="state-heading text-success">Scan Completed</h3>
+              <p className="state-description">
+                Security assessment completed successfully.
+                {scanData?.score !== undefined && scanData?.score !== null && (
+                  <> Overall Security Score: <strong className="mono">{scanData.score}/100</strong> (Grade {scanData.grade || 'N/A'}).</>
+                )}
+              </p>
+            </div>
+          </div>
+        )}
+
         {isFailed && (
           <div className="state-content">
             <div className="state-icon-wrapper failed">
@@ -109,7 +130,18 @@ export default function ScanProgress({
         </div>
 
         <div className="progress-actions">
-          {isFailed ? (
+          {isCompleted ? (
+            <div className="action-buttons-group">
+              <Link to={`/results/${scanId}`} className="btn btn-primary">
+                View Full Results →
+              </Link>
+              {onReset && (
+                <button type="button" className="btn btn-secondary" onClick={onReset}>
+                  Scan Another Website
+                </button>
+              )}
+            </div>
+          ) : isFailed ? (
             <div className="action-buttons-group">
               {onRetry && (
                 <button type="button" className="btn btn-primary" onClick={onRetry}>

@@ -23,7 +23,7 @@ class Settings(BaseSettings):
     REDIS_URL: str = "redis://localhost:6379/0"
     CELERY_BROKER_URL: str = "redis://localhost:6379/0"
     CELERY_RESULT_BACKEND: str = "redis://localhost:6379/0"
-    SCAN_EXECUTION_MODE: Literal["celery", "background"] = "background"
+    SCAN_EXECUTION_MODE: Literal["celery", "background"] = "celery"
 
     # Scanner Operational & Safety Bounds
     SCANNER_TIMEOUT_SECONDS: int = 10

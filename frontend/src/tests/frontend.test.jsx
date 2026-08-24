@@ -215,6 +215,57 @@ describe('ScanProgress Component', () => {
     expect(screen.getByText('test-scan-123')).toBeDefined();
     expect(screen.getByText(/Live status polling/i)).toBeDefined();
   });
+
+  it('renders completed state with Scan Completed heading, score summary, and View Results action', () => {
+    render(
+      <BrowserRouter>
+        <ScanProgress
+          scanId="test-scan-complete-456"
+          targetUrl="https://example.com"
+          status="COMPLETED"
+          scanData={{ score: 95, grade: 'A' }}
+        />
+      </BrowserRouter>
+    );
+
+    expect(screen.getByText('Scan Completed')).toBeDefined();
+    expect(screen.getByText(/Security assessment completed successfully/i)).toBeDefined();
+    expect(screen.getByText(/95\/100/i)).toBeDefined();
+    expect(screen.getByText(/Grade A/i)).toBeDefined();
+
+    const viewBtn = screen.getByRole('link', { name: /View Full Results/i });
+    expect(viewBtn.getAttribute('href')).toBe('/results/test-scan-complete-456');
+  });
+
+  it('renders failed state with error message and action buttons', () => {
+    const mockRetry = vi.fn();
+    const mockReset = vi.fn();
+
+    render(
+      <BrowserRouter>
+        <ScanProgress
+          scanId="test-scan-fail-789"
+          targetUrl="https://example.com"
+          status="FAILED"
+          error="DNS resolution failed for target host."
+          onRetry={mockRetry}
+          onReset={mockReset}
+        />
+      </BrowserRouter>
+    );
+
+    expect(screen.getByText('Scan could not be completed')).toBeDefined();
+    expect(screen.getByText('DNS resolution failed for target host.')).toBeDefined();
+
+    const tryAgainBtn = screen.getByRole('button', { name: /Try Again/i });
+    const scanAnotherBtn = screen.getByRole('button', { name: /Scan Another Website/i });
+
+    fireEvent.click(tryAgainBtn);
+    expect(mockRetry).toHaveBeenCalledTimes(1);
+
+    fireEvent.click(scanAnotherBtn);
+    expect(mockReset).toHaveBeenCalledTimes(1);
+  });
 });
 
 describe('ScoreGauge Component', () => {

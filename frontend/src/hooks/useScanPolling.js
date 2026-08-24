@@ -25,6 +25,14 @@ export function useScanPolling(scanId, options = {}) {
   const isMountedRef = useRef(true);
   const consecutiveErrorsRef = useRef(0);
 
+  // Store latest callbacks in refs to prevent useEffect teardown loops
+  const onCompleteRef = useRef(onComplete);
+  const onErrorRef = useRef(onError);
+  useEffect(() => {
+    onCompleteRef.current = onComplete;
+    onErrorRef.current = onError;
+  });
+
   const clearTimer = useCallback(() => {
     if (timerRef.current) {
       clearTimeout(timerRef.current);
@@ -79,10 +87,18 @@ export function useScanPolling(scanId, options = {}) {
 
         if (currentStatus === 'COMPLETED') {
           setIsPolling(false);
-          const fullData = await getScan(scanId);
-          if (active && isMountedRef.current) {
-            setScanData(fullData);
-            if (onComplete) onComplete(fullData);
+          try {
+            const fullData = await getScan(scanId);
+            if (active && isMountedRef.current) {
+              setScanData(fullData);
+              if (onCompleteRef.current) onCompleteRef.current(fullData);
+            }
+          } catch {
+            if (active && isMountedRef.current) {
+              const basicData = { id: scanId, status: 'COMPLETED' };
+              setScanData(basicData);
+              if (onCompleteRef.current) onCompleteRef.current(basicData);
+            }
           }
           return;
         }
@@ -95,13 +111,15 @@ export function useScanPolling(scanId, options = {}) {
           if (active && isMountedRef.current) {
             setError(errMsg);
             setScanData(fullData);
-            if (onError) onError(errMsg);
+            if (onErrorRef.current) onErrorRef.current(errMsg);
           }
           return;
         }
 
         // Schedule next poll cycle
-        timerRef.current = setTimeout(poll, interval);
+        if (active && isMountedRef.current) {
+          timerRef.current = setTimeout(poll, interval);
+        }
       } catch (err) {
         if (!active || !isMountedRef.current) return;
 
@@ -117,7 +135,7 @@ export function useScanPolling(scanId, options = {}) {
             err.message || 'Unable to communicate with the scanner API. Please check your connection.';
           setError(errorMsg);
           setStatus('FAILED');
-          if (onError) onError(errorMsg);
+          if (onErrorRef.current) onErrorRef.current(errorMsg);
         }
       }
     };
@@ -128,7 +146,7 @@ export function useScanPolling(scanId, options = {}) {
       active = false;
       clearTimer();
     };
-  }, [scanId, interval, maxRetries, onComplete, onError, clearTimer, resetPolling]);
+  }, [scanId, interval, maxRetries, clearTimer, resetPolling]);
 
   return {
     status,
