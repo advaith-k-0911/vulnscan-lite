@@ -2,6 +2,7 @@
 VulnScan Lite - Configuration Settings Management
 Uses Pydantic Settings for environment-driven, production-safe configuration.
 """
+import secrets
 from typing import List, Literal, Union
 from pydantic import field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -46,6 +47,14 @@ class Settings(BaseSettings):
         "http://127.0.0.1:3000",
         "http://127.0.0.1:5173",
     ]
+
+    @field_validator("SECRET_KEY", mode="after")
+    @classmethod
+    def validate_secret_key(cls, v: str) -> str:
+        if v == "default-development-secret-key-change-in-production":
+            # Generate a secure cryptographically random 256-bit token
+            return secrets.token_hex(32)
+        return v
 
     @field_validator("CORS_ORIGINS", mode="before")
     @classmethod

@@ -18,7 +18,7 @@ from backend.app.schemas.scan import (
     ScanStatusResponse,
     ScanSummaryResponse,
 )
-from backend.app.security.rate_limiter import scan_creation_limiter
+from backend.app.security.rate_limiter import scan_creation_limiter, pdf_download_limiter
 from backend.app.services.scan_service import ScanService
 from backend.tasks import run_scan, execute_scan_job
 from reports.pdf_generator import generate_pdf_report
@@ -188,6 +188,7 @@ def get_scan(
 def download_scan_pdf(
     scan_id: str,
     db: Session = Depends(get_db),
+    _rate_limit: None = Depends(pdf_download_limiter),
 ):
     """
     Generate and stream an in-memory PDF executive report for a completed scan.

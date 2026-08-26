@@ -1,0 +1,125 @@
+{"kind":"deck","id":"pr/9xlniq","name":"Deck"}
+{"kind":"layout","layoutId":"40d84392-19d4-4723-96b3-f798df4ede81","name":"Master","type":"master"}
+{"kind":"layout","layoutId":"900141ad-1c9b-4591-bd9c-5c84f9ddb83a","name":"Title Slide","type":"title"}
+{"kind":"slide","id":"sl/ff7oiz","slide":1,"title":"VULNSCAN LITE","textShapes":5}
+{"kind":"shape","id":"sh/tgn69w3q","slide":1,"bbox":[52,52,140,8]}
+{"kind":"textbox","id":"sh/6tcnyh4f","slide":1,"text":"VULNSCAN LITE","textPreview":"VULNSCAN LITE","textChars":13,"textLines":1,"bbox":[52,92,560,70]}
+{"kind":"textbox","id":"sh/7ulo7mlk","slide":1,"text":"Passive Web Security and Configuration Posture Scanner","textPreview":"Passive Web Security and Configuration Posture Scanner","textChars":54,"textLines":1,"bbox":[52,180,550,66]}
+{"kind":"textbox","id":"sh/kru5w7m9","slide":1,"text":"Project Submission Presentation","textPreview":"Project Submission Presentation","textChars":31,"textLines":1,"bbox":[52,285,440,36]}
+{"kind":"textbox","id":"sh/5s365c3u","slide":1,"text":"Advaith K\nB.Tech CSE - Cyber Security","textPreview":"Advaith K | B.Tech CSE - Cyber Security","textChars":37,"textLines":2,"bbox":[52,345,470,82]}
+{"kind":"shape","id":"sh/ipcnux43","slide":1,"bbox":[668,64,540,560]}
+{"kind":"textbox","id":"sh/wna5s7mx","slide":1,"text":"Live web application interface","textPreview":"Live web application interface","textChars":30,"textLines":1,"bbox":[684,630,508,28]}
+{"kind":"image","id":"im/ulgzy10b","slide":1,"name":"","geometry":"roundRect","alt":"VulnScan Lite live scanner interface","bbox":[684,80,508,528]}
+{"kind":"notes","id":"nt/ff7oiz","slide":1,"text":""}
+{"kind":"slide","id":"sl/lkyynh","slide":2,"title":"PROJECT CONTEXT","textShapes":11}
+{"kind":"textbox","id":"sh/x8nq5wf2","slide":2,"text":"PROJECT CONTEXT","textPreview":"PROJECT CONTEXT","textChars":15,"textLines":1,"bbox":[52,44,420,24]}
+{"kind":"textbox","id":"sh/alw7uhgb","slide":2,"text":"A focused security posture check for public web applications","textPreview":"A focused security posture check for public web applications","textChars":60,"textLines":1,"bbox":[52,78,1000,76]}
+{"kind":"textbox","id":"sh/bm583mxw","slide":2,"text":"VulnScan Lite turns publicly available web configuration signals into a readable security summary without launching intrusive tests.","textPreview":"VulnScan Lite turns publicly available web configuration signals into a readable security summary without launching intrusive tests.","textChars":132,"textLines":1,"bbox":[52,160,850,56]}
+{"kind":"shape","id":"sh/ojepsry5","slide":2,"bbox":[52,666,1176,1]}
+{"kind":"textbox","id":"sh/9knq1cfq","slide":2,"text":"VulnScan Lite | Project Submission","textPreview":"VulnScan Lite | Project Submission","textChars":34,"textLines":1,"bbox":[52,677,420,22]}
+{"kind":"textbox","id":"sh/mhw7qhgf","slide":2,"text":"2","textPreview":"2","textChars":1,"textLines":1,"bbox":[1180,677,48,22]}
+{"kind":"shape","id":"sh/ni58zmx0","slide":2,"bbox":[52,270,350,270]}
+{"kind":"textbox","id":"sh/8fy94byp","slide":2,"text":"Problem","textPreview":"Problem","textChars":7,"textLines":1,"bbox":[76,292,302,32]}
+{"kind":"textbox","id":"sh/tgrqdgfa","slide":2,"text":"Basic header and TLS issues are easy to miss, yet they directly affect browser and user safety.","textPreview":"Basic header and TLS issues are easy to miss, yet they directly affect browser and user safety.","textChars":95,"textLines":1,"bbox":[76,338,302,184]}
+{"kind":"shape","id":"sh/pcne9oja","slide":2,"bbox":[465,270,350,270]}
+{"kind":"textbox","id":"sh/obux0jip","slide":2,"text":"Approach","textPreview":"Approach","textChars":8,"textLines":1,"bbox":[489,292,302,32]}
+{"kind":"textbox","id":"sh/nalw7e14","slide":2,"text":"Validate the target, collect passive evidence, normalize findings, and produce an actionable score.","textPreview":"Validate the target, collect passive evidence, normalize findings, and produce an actionable score.","textChars":99,"textLines":1,"bbox":[489,338,302,184]}
+{"kind":"shape","id":"sh/29cfy90j","slide":2,"bbox":[878,270,350,270]}
+{"kind":"textbox","id":"sh/1o3e5ojy","slide":2,"text":"Outcome","textPreview":"Outcome","textChars":7,"textLines":1,"bbox":[902,292,302,32]}
+{"kind":"textbox","id":"sh/0nuxwjid","slide":2,"text":"One report combines findings, a grade, remediation guidance, PDF export, and persistent scan history.","textPreview":"One report combines findings, a grade, remediation guidance, PDF export, and persistent scan history.","textChars":101,"textLines":1,"bbox":[902,338,302,184]}
+{"kind":"notes","id":"nt/lkyynh","slide":2,"text":""}
+{"kind":"slide","id":"sl/dv78it","slide":3,"title":"WHAT IT EXAMINES","textShapes":11}
+{"kind":"textbox","id":"sh/a94vaxo3","slide":3,"text":"WHAT IT EXAMINES","textPreview":"WHAT IT EXAMINES","textChars":16,"textLines":1,"bbox":[52,44,420,24]}
+{"kind":"textbox","id":"sh/xwve5c7u","slide":3,"text":"Three passive evidence layers give the report practical depth","textPreview":"Three passive evidence layers give the report practical depth","textChars":61,"textLines":1,"bbox":[52,78,1000,76]}
+{"kind":"textbox","id":"sh/wvmdc769","slide":3,"text":"Each scan is non-intrusive and evaluates information the target already exposes to a normal browser connection.","textPreview":"Each scan is non-intrusive and evaluates information the target already exposes to a normal browser connection.","textChars":111,"textLines":1,"bbox":[52,160,850,56]}
+{"kind":"shape","id":"sh/n6dwz2ps","slide":3,"bbox":[52,666,1176,1]}
+{"kind":"textbox","id":"sh/m5kv6x87","slide":3,"text":"VulnScan Lite | Project Submission","textPreview":"VulnScan Lite | Project Submission","textChars":34,"textLines":1,"bbox":[52,677,420,22]}
+{"kind":"textbox","id":"sh/98ve1c7i","slide":3,"text":"3","textPreview":"3","textChars":1,"textLines":1,"bbox":[1180,677,48,22]}
+{"kind":"shape","id":"sh/o7md876x","slide":3,"bbox":[52,255,1176,1]}
+{"kind":"textbox","id":"sh/z2twvipg","slide":3,"text":"HTTP SECURITY HEADERS","textPreview":"HTTP SECURITY HEADERS","textChars":21,"textLines":1,"bbox":[52,292,330,34]}
+{"kind":"textbox","id":"sh/e1kv2d8v","slide":3,"text":"CSP\nHSTS\nX-Frame-Options\nX-Content-Type-Options\nReferrer-Policy\nPermissions-Policy","textPreview":"CSP | HSTS | X-Frame-Options | X-Content-Type-Options | Referrer-Policy | Permissions-Policy","textChars":82,"textLines":6,"bbox":[52,346,320,260]}
+{"kind":"shape","id":"sh/sv298rql","slide":3,"bbox":[415,278,1,320]}
+{"kind":"textbox","id":"sh/twbahw76","slide":3,"text":"TLS AND TRANSPORT","textPreview":"TLS AND TRANSPORT","textChars":17,"textLines":1,"bbox":[465,292,330,34]}
+{"kind":"textbox","id":"sh/6t0r618f","slide":3,"text":"Certificate validity\nHostname verification\nTLS version\nCipher strength\nHTTPS redirect behavior","textPreview":"Certificate validity | Hostname verification | TLS version | Cipher strength | HTTPS redirect behavior","textChars":94,"textLines":5,"bbox":[465,346,320,210]}
+{"kind":"shape","id":"sh/ru9sf6p0","slide":3,"bbox":[828,278,1,320]}
+{"kind":"textbox","id":"sh/4ri94rqp","slide":3,"text":"APPLICATION SIGNALS","textPreview":"APPLICATION SIGNALS","textChars":19,"textLines":1,"bbox":[878,292,330,34]}
+{"kind":"textbox","id":"sh/5srqdw7a","slide":3,"text":"Response timing\nRedirect chain\nContent metadata\nPassive CMS indicators\nStructured remediation","textPreview":"Response timing | Redirect chain | Content metadata | Passive CMS indicators | Structured remediation","textChars":93,"textLines":5,"bbox":[878,346,320,210]}
+{"kind":"notes","id":"nt/dv78it","slide":3,"text":""}
+{"kind":"slide","id":"sl/lbpsbn","slide":4,"title":"SYSTEM ARCHITECTURE","textShapes":17}
+{"kind":"textbox","id":"sh/ru9kzilo","slide":4,"text":"SYSTEM ARCHITECTURE","textPreview":"SYSTEM ARCHITECTURE","textChars":19,"textLines":1,"bbox":[52,44,420,24]}
+{"kind":"textbox","id":"sh/svilsnm9","slide":4,"text":"A browser request becomes a durable, reviewable security report","textPreview":"A browser request becomes a durable, reviewable security report","textChars":63,"textLines":1,"bbox":[52,78,1000,76]}
+{"kind":"textbox","id":"sh/dwr21s3u","slide":4,"text":"The deployed application separates the user interface, API validation, scan execution, and persistent result storage.","textPreview":"The deployed application separates the user interface, API validation, scan execution, and persistent result storage.","textChars":117,"textLines":1,"bbox":[52,160,850,56]}
+{"kind":"shape","id":"sh/ip03md47","slide":4,"bbox":[52,666,1176,1]}
+{"kind":"textbox","id":"sh/3q9kvils","slide":4,"text":"VulnScan Lite | Project Submission","textPreview":"VulnScan Lite | Project Submission","textChars":34,"textLines":1,"bbox":[52,677,420,22]}
+{"kind":"textbox","id":"sh/4rilonmd","slide":4,"text":"4","textPreview":"4","textChars":1,"textLines":1,"bbox":[1180,677,48,22]}
+{"kind":"shape","id":"sh/5sr2xs3i","slide":4,"bbox":[52,330,230,176]}
+{"kind":"textbox","id":"sh/2lk3yx4b","slide":4,"text":"Browser","textPreview":"Browser","textChars":7,"textLines":1,"bbox":[72,360,190,36]}
+{"kind":"textbox","id":"sh/nmtk72lw","slide":4,"text":"React + Vite","textPreview":"React + Vite","textChars":12,"textLines":1,"bbox":[72,416,190,70]}
+{"kind":"shape","id":"sh/f6twbmpc","slide":4,"bbox":[325,330,230,176]}
+{"kind":"textbox","id":"sh/e5kfih8r","slide":4,"text":"API","textPreview":"API","textChars":3,"textLines":1,"bbox":[345,360,190,36]}
+{"kind":"textbox","id":"sh/18bedw7i","slide":4,"text":"FastAPI\nvalidation + SSRF defense","textPreview":"FastAPI | validation + SSRF defense","textChars":33,"textLines":2,"bbox":[345,416,190,70]}
+{"kind":"shape","id":"sh/072xkrqx","slide":4,"bbox":[630,330,230,176]}
+{"kind":"textbox","id":"sh/nadwfmpo","slide":4,"text":"Scan execution","textPreview":"Scan execution","textChars":14,"textLines":1,"bbox":[650,360,190,36]}
+{"kind":"textbox","id":"sh/29kfm183","slide":4,"text":"Background runner\npassive HTTP + TLS checks","textPreview":"Background runner | passive HTTP + TLS checks","textChars":43,"textLines":2,"bbox":[650,416,190,70]}
+{"kind":"shape","id":"sh/pwvehw7e","slide":4,"bbox":[955,330,230,176]}
+{"kind":"textbox","id":"sh/ovmxorqt","slide":4,"text":"Results","textPreview":"Results","textChars":7,"textLines":1,"bbox":[975,360,190,36]}
+{"kind":"textbox","id":"sh/bydwj6pk","slide":4,"text":"PostgreSQL\nreport + scan history","textPreview":"PostgreSQL | report + scan history","textChars":32,"textLines":2,"bbox":[975,416,190,70]}
+{"kind":"textbox","id":"sh/ax4fq18z","slide":4,"text":"->","textPreview":"->","textChars":2,"textLines":1,"bbox":[286,387,38,32]}
+{"kind":"textbox","id":"sh/mt8zi5s7","slide":4,"text":"->","textPreview":"->","textChars":2,"textLines":1,"bbox":[583,387,38,32]}
+{"kind":"textbox","id":"sh/7uh0ba9s","slide":4,"text":"->","textPreview":"->","textChars":2,"textLines":1,"bbox":[910,387,38,32]}
+{"kind":"textbox","id":"sh/8vqhkfad","slide":4,"text":"The API returns immediately, while scan status and full reports are fetched asynchronously by the frontend.","textPreview":"The API returns immediately, while scan status and full reports are fetched asynchronously by the frontend.","textChars":107,"textLines":1,"bbox":[120,565,1040,42]}
+{"kind":"notes","id":"nt/lbpsbn","slide":4,"text":""}
+{"kind":"slide","id":"sl/b2rxbd","slide":5,"title":"SCAN WORKFLOW","textShapes":17}
+{"kind":"textbox","id":"sh/a9gfy1o7","slide":5,"text":"SCAN WORKFLOW","textPreview":"SCAN WORKFLOW","textChars":13,"textLines":1,"bbox":[52,44,420,24]}
+{"kind":"textbox","id":"sh/xwrytw7i","slide":5,"text":"The app moves from target URL to remediation in four controlled steps","textPreview":"The app moves from target URL to remediation in four controlled steps","textChars":69,"textLines":1,"bbox":[52,78,1000,76]}
+{"kind":"textbox","id":"sh/wbix0r6x","slide":5,"text":"This design keeps the user interface responsive while preserving lifecycle state in the database.","textPreview":"This design keeps the user interface responsive while preserving lifecycle state in the database.","textChars":97,"textLines":1,"bbox":[52,160,850,56]}
+{"kind":"shape","id":"sh/jy9gv6po","slide":5,"bbox":[52,666,1176,1]}
+{"kind":"textbox","id":"sh/ix0f21o3","slide":5,"text":"VulnScan Lite | Project Submission","textPreview":"VulnScan Lite | Project Submission","textChars":34,"textLines":1,"bbox":[52,677,420,22]}
+{"kind":"textbox","id":"sh/50ryxg7u","slide":5,"text":"5","textPreview":"5","textChars":1,"textLines":1,"bbox":[1180,677,48,22]}
+{"kind":"textbox","id":"sh/kzix4b69","slide":5,"text":"01","textPreview":"01","textChars":2,"textLines":1,"bbox":[52,304,120,56]}
+{"kind":"textbox","id":"sh/z25wjmpk","slide":5,"text":"Submit","textPreview":"Submit","textChars":6,"textLines":1,"bbox":[52,378,230,38]}
+{"kind":"textbox","id":"sh/e1wfqhoz","slide":5,"text":"Enter an owned or authorized public URL.","textPreview":"Enter an owned or authorized public URL.","textChars":40,"textLines":1,"bbox":[52,436,230,86]}
+{"kind":"shape","id":"sh/gned4725","slide":5,"bbox":[282,332,56,3]}
+{"kind":"textbox","id":"sh/honudcjq","slide":5,"text":"02","textPreview":"02","textChars":2,"textLines":1,"bbox":[349,304,120,56]}
+{"kind":"textbox","id":"sh/ulwv2hkz","slide":5,"text":"Validate","textPreview":"Validate","textChars":8,"textLines":1,"bbox":[349,378,230,38]}
+{"kind":"textbox","id":"sh/fm5cbm1k","slide":5,"text":"Normalize URL and block private or unsafe targets.","textPreview":"Normalize URL and block private or unsafe targets.","textChars":50,"textLines":1,"bbox":[349,436,230,86]}
+{"kind":"shape","id":"sh/4byd8r21","slide":5,"bbox":[579,332,56,3]}
+{"kind":"textbox","id":"sh/pc7uhwjm","slide":5,"text":"03","textPreview":"03","textChars":2,"textLines":1,"bbox":[646,304,120,56]}
+{"kind":"textbox","id":"sh/2pgv6hkb","slide":5,"text":"Analyze","textPreview":"Analyze","textChars":7,"textLines":1,"bbox":[646,378,230,38]}
+{"kind":"textbox","id":"sh/3qpcfm1w","slide":5,"text":"Collect HTTP, TLS, redirect, and CMS evidence.","textPreview":"Collect HTTP, TLS, redirect, and CMS evidence.","textChars":46,"textLines":1,"bbox":[646,436,230,86]}
+{"kind":"shape","id":"sh/kfutwn2x","slide":5,"bbox":[876,332,56,3]}
+{"kind":"textbox","id":"sh/lg3u5sji","slide":5,"text":"04","textPreview":"04","textChars":2,"textLines":1,"bbox":[943,304,120,56]}
+{"kind":"textbox","id":"sh/lcvatov6","slide":5,"text":"Report","textPreview":"Report","textChars":6,"textLines":1,"bbox":[943,378,230,38]}
+{"kind":"textbox","id":"sh/0bm90jul","slide":5,"text":"Store score, findings, PDF, and history entry.","textPreview":"Store score, findings, PDF, and history entry.","textChars":46,"textLines":1,"bbox":[943,436,230,86]}
+{"kind":"shape","id":"sh/zadsredg","slide":5,"bbox":[1173,332,56,3]}
+{"kind":"notes","id":"nt/b2rxbd","slide":5,"text":""}
+{"kind":"slide","id":"sl/cksc6d","slide":6,"title":"USER-FACING RESULTS","textShapes":11}
+{"kind":"textbox","id":"sh/8fixo3ih","slide":6,"text":"USER-FACING RESULTS","textPreview":"USER-FACING RESULTS","textChars":19,"textLines":1,"bbox":[52,44,420,24]}
+{"kind":"textbox","id":"sh/7e9wfyhw","slide":6,"text":"Every completed scan produces a score, detailed findings, and a reusable record","textPreview":"Every completed scan produces a score, detailed findings, and a reusable record","textChars":79,"textLines":1,"bbox":[52,78,1000,76]}
+{"kind":"textbox","id":"sh/6d0fmt0b","slide":6,"text":"The report is designed to turn low-level web configuration details into a clear next action.","textPreview":"The report is designed to turn low-level web configuration details into a clear next action.","textChars":92,"textLines":1,"bbox":[52,160,850,56]}
+{"kind":"shape","id":"sh/hkbel8zy","slide":6,"bbox":[52,666,1176,1]}
+{"kind":"textbox","id":"sh/gj2xs3yd","slide":6,"text":"VulnScan Lite | Project Submission","textPreview":"VulnScan Lite | Project Submission","textChars":34,"textLines":1,"bbox":[52,677,420,22]}
+{"kind":"textbox","id":"sh/vitwjyhs","slide":6,"text":"6","textPreview":"6","textChars":1,"textLines":1,"bbox":[1180,677,48,22]}
+{"kind":"shape","id":"sh/uhkfqtg7","slide":6,"bbox":[52,278,350,250]}
+{"kind":"textbox","id":"sh/xo7e94ze","slide":6,"text":"0-100 score","textPreview":"0-100 score","textChars":11,"textLines":1,"bbox":[76,300,302,32]}
+{"kind":"textbox","id":"sh/wnydgzi9","slide":6,"text":"Severity-weighted deductions summarize the current posture and map it to an A-F grade.","textPreview":"Severity-weighted deductions summarize the current posture and map it to an A-F grade.","textChars":86,"textLines":1,"bbox":[76,346,302,164]}
+{"kind":"shape","id":"sh/6hgr6tkj","slide":6,"bbox":[465,278,350,250]}
+{"kind":"textbox","id":"sh/ripsfy14","slide":6,"text":"Actionable findings","textPreview":"Actionable findings","textChars":19,"textLines":1,"bbox":[489,300,302,32]}
+{"kind":"textbox","id":"sh/sjy9832p","slide":6,"text":"Each finding explains what was observed and includes Nginx, Apache, or Caddy remediation examples.","textPreview":"Each finding explains what was observed and includes Nginx, Apache, or Caddy remediation examples.","textChars":98,"textLines":1,"bbox":[489,346,302,164]}
+{"kind":"shape","id":"sh/tk7ahoju","slide":6,"bbox":[878,278,350,250]}
+{"kind":"textbox","id":"sh/elgbatkf","slide":6,"text":"Persistent history","textPreview":"Persistent history","textChars":18,"textLines":1,"bbox":[902,300,302,32]}
+{"kind":"textbox","id":"sh/fmpsjy10","slide":6,"text":"Completed scans remain available for later review, full report access, and PDF download.","textPreview":"Completed scans remain available for later review, full report access, and PDF download.","textChars":88,"textLines":1,"bbox":[902,346,302,164]}
+{"kind":"notes","id":"nt/cksc6d","slide":6,"text":""}
+{"kind":"slide","id":"sl/bjg13c","slide":7,"title":"Ready for review","textShapes":8}
+{"kind":"shape","id":"sh/w361gzyp","slide":7,"bbox":[52,52,140,8]}
+{"kind":"textbox","id":"sh/vix07uh4","slide":7,"text":"Ready for review","textPreview":"Ready for review","textChars":16,"textLines":1,"bbox":[52,98,760,74]}
+{"kind":"textbox","id":"sh/ahojepgj","slide":7,"text":"The submission contains the source code, presentation, report, and working deployment links.","textPreview":"The submission contains the source code, presentation, report, and working deployment links.","textChars":92,"textLines":1,"bbox":[52,188,770,48]}
+{"kind":"shape","id":"sh/58zid4z6","slide":7,"bbox":[52,295,1120,194]}
+{"kind":"textbox","id":"sh/47q1kzyl","slide":7,"text":"Source code","textPreview":"Source code","textChars":11,"textLines":1,"bbox":[84,332,190,32]}
+{"kind":"textbox","id":"sh/j6h0buhg","slide":7,"text":"github.com/advaith-k-0911/vulnscan-lite","textPreview":"github.com/advaith-k-0911/vulnscan-lite","textChars":39,"textLines":1,"bbox":[84,376,460,34]}
+{"kind":"shape","id":"sh/i58jipgv","slide":7,"bbox":[590,325,1,125]}
+{"kind":"textbox","id":"sh/tcj2hofi","slide":7,"text":"Live application","textPreview":"Live application","textChars":16,"textLines":1,"bbox":[630,332,240,32]}
+{"kind":"textbox","id":"sh/sba1ojyx","slide":7,"text":"vulnscan-frontend-kokj.onrender.com","textPreview":"vulnscan-frontend-kokj.onrender.com","textChars":35,"textLines":1,"bbox":[630,376,470,34]}
+{"kind":"textbox","id":"sh/yh8ved4n","slide":7,"text":"Only scan websites you own or have explicit permission to assess.","textPreview":"Only scan websites you own or have explicit permission to assess.","textChars":65,"textLines":1,"bbox":[52,555,1100,36]}
+{"kind":"textbox","id":"sh/zihc7il8","slide":7,"text":"Thank you","textPreview":"Thank you","textChars":9,"textLines":1,"bbox":[52,618,260,42]}
+{"kind":"notes","id":"nt/bjg13c","slide":7,"text":""}

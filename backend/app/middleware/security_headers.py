@@ -39,9 +39,11 @@ class SecurityHeadersMiddleware(BaseHTTPMiddleware):
         # Baseline defensive headers
         response.headers["X-Content-Type-Options"] = "nosniff"
         response.headers["X-Frame-Options"] = "DENY"
+        response.headers["X-XSS-Protection"] = "0"
         response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
         response.headers["Permissions-Policy"] = "geolocation=(), camera=(), microphone=(), payment=()"
-        response.headers["Content-Security-Policy"] = "default-src 'self'; frame-ancestors 'none';"
+        response.headers["Content-Security-Policy"] = "default-src 'self'; base-uri 'none'; object-src 'none'; frame-ancestors 'none';"
+        response.headers["Server"] = "VulnScanLite"
 
         # Strict-Transport-Security is enabled ONLY when explicitly configured or in production
         # to prevent breaking local HTTP development on localhost.

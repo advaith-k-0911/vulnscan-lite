@@ -9,12 +9,16 @@ from sqlalchemy.orm import declarative_base, sessionmaker, Session
 
 from backend.app.config import settings
 
+db_url = settings.DATABASE_URL
+if db_url.startswith("postgres://"):
+    db_url = db_url.replace("postgres://", "postgresql://", 1)
+
 # Configure SQLite thread checking and ensure storage directory exists
 connect_args = {}
-if settings.DATABASE_URL.startswith("sqlite"):
+if db_url.startswith("sqlite"):
     connect_args = {"check_same_thread": False}
     # Auto-create parent directory for SQLite file if specified
-    db_path = settings.DATABASE_URL.replace("sqlite:///", "")
+    db_path = db_url.replace("sqlite:///", "")
     if db_path and ("/" in db_path or "\\" in db_path):
         parent_dir = os.path.dirname(db_path)
         if parent_dir and not os.path.exists(parent_dir):
@@ -24,7 +28,7 @@ if settings.DATABASE_URL.startswith("sqlite"):
                 pass
 
 engine = create_engine(
-    settings.DATABASE_URL,
+    db_url,
     connect_args=connect_args,
     echo=False,
 )

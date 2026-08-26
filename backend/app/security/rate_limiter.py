@@ -4,6 +4,7 @@ Redis-backed sliding/fixed window rate limiter with in-memory fallback
 for protecting sensitive endpoints against abusive request volumes.
 """
 
+import ipaddress
 import logging
 import threading
 import time
@@ -14,6 +15,43 @@ import redis
 from backend.app.config import settings
 
 logger = logging.getLogger("vulnscan.security.ratelimit")
+
+
+def extract_client_ip(request: Request) -> str:
+    """
+    Extract and validate the client's IP address.
+    Checks reverse-proxy headers with strict ipaddress format validation
+    to prevent key pollution and IP spoofing.
+    """
+    direct_ip = "127.0.0.1"
+    if request.client and request.client.host:
+        direct_ip = request.client.host.strip()
+
+    # Check reverse proxy headers in priority order
+    for header_name in ("CF-Connecting-IP", "X-Real-IP"):
+        val = request.headers.get(header_name)
+        if val:
+            candidate = val.strip()
+            try:
+                ipaddress.ip_address(candidate)
+                return candidate
+            except ValueError:
+                pass
+
+    forwarded_for = request.headers.get("X-Forwarded-For")
+    if forwarded_for:
+        candidate = forwarded_for.split(",")[0].strip()
+        try:
+            ipaddress.ip_address(candidate)
+            return candidate
+        except ValueError:
+            pass
+
+    try:
+        ipaddress.ip_address(direct_ip)
+        return direct_ip
+    except ValueError:
+        return "127.0.0.1"
 
 
 class RateLimiter:
@@ -164,16 +202,7 @@ class RateLimiter:
 
     def __call__(self, request: Request) -> None:
         """FastAPI Dependency Callable."""
-        # Determine client identifier (IP address)
-        client_ip = "127.0.0.1"
-        if request.client and request.client.host:
-            client_ip = request.client.host
-
-        # Support X-Forwarded-For when behind a reverse proxy
-        forwarded_for = request.headers.get("X-Forwarded-For")
-        if forwarded_for:
-            client_ip = forwarded_for.split(",")[0].strip()
-
+        client_ip = extract_client_ip(request)
         self.check(client_ip)
 
 
@@ -182,5 +211,13 @@ scan_creation_limiter = RateLimiter(
     limit=settings.RATE_LIMIT_SCAN_CREATION_LIMIT,
     window_seconds=settings.RATE_LIMIT_SCAN_CREATION_WINDOW,
     key_prefix="ratelimit:scan_create",
+    enabled=settings.RATE_LIMIT_ENABLED,
+)
+
+# Shared rate limiter instance for PDF report downloads (30 downloads / 60s)
+pdf_download_limiter = RateLimiter(
+    limit=30,
+    window_seconds=60,
+    key_prefix="ratelimit:pdf_download",
     enabled=settings.RATE_LIMIT_ENABLED,
 )
